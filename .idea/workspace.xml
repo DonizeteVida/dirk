@@ -5,38 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25b8fab6-66a6-4e7b-8606-e764ae4c3f44" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dirk-processor/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dirk-processor/src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dirk-processor/src/main/resources/META-INF/services/javax.annotation.processing.Processor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/.gitignore" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/.idea/misc.xml" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/build.gradle.kts" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/build.gradle.kts" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/resources/META-INF/services/javax.annotation.processing.Processor" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/gradle.properties" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/gradlew" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/gradlew.bat" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/settings.gradle.kts" afterDir="false" />
-      <change afterPath="/media/doni/bigHD/backup/Others/dirk/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/ExampleGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/resources/META-INF/services/javax.annotation.processing.Processor" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/resources/META-INF/services/javax.annotation.processing.Processor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dirk/src/main/kotlin/Todo.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="/media/doni/bigHD/backup/Others/dirk/.idea/misc.xml" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/.idea/misc.xml" afterDir="false" />
+      <change beforePath="/media/doni/bigHD/backup/Others/dirk/.idea/workspace.xml" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="/media/doni/bigHD/backup/Others/dirk/build.gradle.kts" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/build.gradle.kts" afterDir="false" />
+      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/ExampleGenerator.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/DirkGenerator.kt" afterDir="false" />
+      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider" afterDir="false" />
+      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/resources/META-INF/services/javax.annotation.processing.Processor" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/resources/META-INF/services/javax.annotation.processing.Processor" afterDir="false" />
+      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk/src/main/kotlin/Todo.kt" beforeDir="false" />
+      <change beforePath="/media/doni/bigHD/backup/Others/dirk/gradle.properties" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/gradle.properties" afterDir="false" />
+      <change beforePath="/media/doni/bigHD/backup/Others/dirk/src/main/kotlin/Main.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/src/main/kotlin/Main.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,12 +34,23 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Class" />
-        <option value="Kotlin File" />
         <option value="Kotlin Interface" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Annotation" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -75,7 +72,11 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/media/doni/bigHD/backup/Others/dirk"
+    "last_opened_file_path": "/home/doni/Desktop/backup/Others/ksp/examples/playground",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "inlay.hints"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -85,9 +86,37 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/examples" />
     </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="dummy" />
+      <recent name="information" />
+      <recent name="visitor" />
+      <recent name="" />
+      <recent name="annotation" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
+  </component>
+  <component name="RunManager" selected="Gradle.dirk [clean assemble]">
+    <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MainKt" />
+      <module name="playground.main" />
+      <shortenClasspath name="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.dirk [clean assemble]" />
+      <item itemvalue="Gradle.dirk [assemble]" />
+      <item itemvalue="Kotlin.MainKt" />
+      <item itemvalue="Remote JVM Debug.Debug" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Kotlin.MainKt" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -115,9 +144,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file:///media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/examples/BuilderProcessor.kt</url>
-          <line>30</line>
-          <option name="timeStamp" value="1" />
+          <url>file:///media/doni/bigHD/backup/Others/dirk/src/main/kotlin/Main.kt</url>
+          <line>1</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file:///media/doni/bigHD/backup/Others/dirk/src/main/kotlin/Main.kt</url>
+          <line>2</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
