@@ -1,6 +1,6 @@
 package dummy
 
-import com.inject.dirk.annotation.Inject
+import Inject
 
 @Inject
 class Gas

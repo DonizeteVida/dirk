@@ -1,11 +1,17 @@
 package visitor
 
+import Factory
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
 import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.symbol.*
+import com.google.devtools.ksp.symbol.KSClassDeclaration
+import com.google.devtools.ksp.symbol.KSVisitorVoid
+import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.ksp.writeTo
 import information.Dependency
 import information.Root
+import information.asClassName
 
 class ClassVisitor(
     private val codeGenerator: CodeGenerator,
@@ -13,46 +19,96 @@ class ClassVisitor(
     private val root: Root
 ) : KSVisitorVoid() {
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
-        val packageName = classDeclaration.packageName.asString()
         val name = classDeclaration.simpleName.getShortName()
+        val packageName = classDeclaration.packageName.asString()
+        val fullName = "$packageName.$name"
 
-        kspLogger.warn("Class: ${packageName}/${name}")
+        kspLogger.warn("Full name: $fullName")
 
-        val file = codeGenerator.createNewFile(
-            Dependencies(true, classDeclaration.containingFile!!),
-            packageName,
-            "${name}_Factory"
-        )
+        if (fullName in root) {
+            kspLogger.warn("$fullName is already mapped")
+            return
+        }
 
         val dependency = Dependency(
             packageName = packageName,
-            name = name
+            name = name,
+            fullName = fullName
         )
-        classDeclaration.primaryConstructor?.accept(this, Unit)
-        file.write("//$dependency".toByteArray())
-        file.close()
-    }
 
-    override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
-        kspLogger.warn("Function: ${function.simpleName.getShortName()}")
-        function.parameters.forEach {
-            it.accept(this, Unit)
-        }
-    }
+        root += dependency
 
-    override fun visitValueParameter(valueParameter: KSValueParameter, data: Unit) {
-        kspLogger.warn("Value: ${valueParameter.name?.getShortName()}")
-        //kspLogger.warn("Location: ${valueParameter.location}")
-        valueParameter.type.accept(this, Unit)
-    }
+        classDeclaration.primaryConstructor?.accept(ConstructorVisitor(kspLogger), dependency)
 
-    override fun visitTypeReference(typeReference: KSTypeReference, data: Unit) {
-        kspLogger.warn("Type: $typeReference")
-        //resolve type to know it's class
-        val resolvedType = typeReference.resolve().declaration
-        kspLogger.warn("Resolved type: $resolvedType")
-        if (resolvedType is KSClassDeclaration) {
-            //resolvedType.accept(this, Unit)
-        }
+        val fileSpec = FileSpec
+            .builder(packageName, "${name}_Factory")
+            .apply {
+                addFileComment(dependency.toString())
+
+                addImport(packageName, name)
+                dependency.dependencies.forEach {
+                    addImport(it.packageName, it.name)
+                }
+
+                addType(
+                    TypeSpec.classBuilder("${name}_Factory").apply {
+                        primaryConstructor(
+                            FunSpec.constructorBuilder().apply {
+                                dependency.dependencies.forEach {
+                                    val lowercase = it.name.lowercase()
+                                    addParameter(
+                                        lowercase,
+                                        Factory::class
+                                            .asClassName()
+                                            .parameterizedBy(it.asClassName()),
+                                    )
+                                    addProperty(
+                                        PropertySpec.builder(
+                                            lowercase,
+                                            Factory::class
+                                                .asClassName()
+                                                .parameterizedBy(it.asClassName()),
+                                            KModifier.PRIVATE
+                                        ).initializer(
+                                            lowercase
+                                        ).build()
+                                    )
+                                }
+                            }.build()
+                        )
+                        addSuperinterface(
+                            Factory::class
+                                .asClassName()
+                                .parameterizedBy(dependency.asClassName())
+                        )
+                        addFunction(
+                            FunSpec.builder("invoke").apply {
+                                addModifiers(
+                                    KModifier.OVERRIDE,
+                                    KModifier.OPERATOR
+                                )
+                                returns(
+                                    TypeVariableName.invoke(dependency.name)
+                                )
+                                addStatement(
+                                    StringBuilder().apply {
+                                        append("return ${dependency.name}(")
+                                        val dependencies = dependency.dependencies.map {
+                                            "${it.name.lowercase()}()"
+                                        }.joinToString(", ")
+                                        append(dependencies)
+                                        append(")")
+                                    }.toString()
+                                )
+                            }.build()
+                        )
+                    }.build()
+                )
+            }.build()
+
+        fileSpec.writeTo(
+            codeGenerator,
+            Dependencies(true, classDeclaration.containingFile!!)
+        )
     }
 }
