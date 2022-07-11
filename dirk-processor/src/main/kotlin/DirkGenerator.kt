@@ -19,7 +19,6 @@ class DirkGenerator(
         symbol.filterIsInstance<KSClassDeclaration>().forEach {
             it.accept(ClassVisitor(codeGenerator, kspLogger, root), Unit)
         }
-
         return emptyList()
     }
 }

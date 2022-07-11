@@ -1,3 +1,3 @@
-//@Target(AnnotationTarget.CONSTRUCTOR)
+@Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.SOURCE)
 annotation class Inject

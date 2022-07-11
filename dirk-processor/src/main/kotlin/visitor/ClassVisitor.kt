@@ -40,8 +40,10 @@ class ClassVisitor(
 
         classDeclaration.primaryConstructor?.accept(ConstructorVisitor(kspLogger), dependency)
 
+        val factoryName = "${name}_Factory"
+
         val fileSpec = FileSpec
-            .builder(packageName, "${name}_Factory")
+            .builder(packageName, factoryName)
             .apply {
                 addFileComment(dependency.toString())
 
@@ -51,58 +53,59 @@ class ClassVisitor(
                 }
 
                 addType(
-                    TypeSpec.classBuilder("${name}_Factory").apply {
-                        primaryConstructor(
-                            FunSpec.constructorBuilder().apply {
-                                dependency.dependencies.forEach {
-                                    val lowercase = it.name.lowercase()
-                                    addParameter(
-                                        lowercase,
-                                        Factory::class
-                                            .asClassName()
-                                            .parameterizedBy(it.asClassName()),
-                                    )
-                                    addProperty(
-                                        PropertySpec.builder(
+                    TypeSpec.classBuilder(factoryName)
+                        .apply {
+                            primaryConstructor(
+                                FunSpec.constructorBuilder().apply {
+                                    dependency.dependencies.forEach {
+                                        val lowercase = it.name.lowercase()
+                                        addParameter(
                                             lowercase,
                                             Factory::class
                                                 .asClassName()
                                                 .parameterizedBy(it.asClassName()),
-                                            KModifier.PRIVATE
-                                        ).initializer(
-                                            lowercase
-                                        ).build()
+                                        )
+                                        addProperty(
+                                            PropertySpec.builder(
+                                                lowercase,
+                                                Factory::class
+                                                    .asClassName()
+                                                    .parameterizedBy(it.asClassName()),
+                                                KModifier.PRIVATE
+                                            ).initializer(
+                                                lowercase
+                                            ).build()
+                                        )
+                                    }
+                                }.build()
+                            )
+                            addSuperinterface(
+                                Factory::class
+                                    .asClassName()
+                                    .parameterizedBy(dependency.asClassName())
+                            )
+                            addFunction(
+                                FunSpec.builder("invoke").apply {
+                                    addModifiers(
+                                        KModifier.OVERRIDE,
+                                        KModifier.OPERATOR
                                     )
-                                }
-                            }.build()
-                        )
-                        addSuperinterface(
-                            Factory::class
-                                .asClassName()
-                                .parameterizedBy(dependency.asClassName())
-                        )
-                        addFunction(
-                            FunSpec.builder("invoke").apply {
-                                addModifiers(
-                                    KModifier.OVERRIDE,
-                                    KModifier.OPERATOR
-                                )
-                                returns(
-                                    TypeVariableName.invoke(dependency.name)
-                                )
-                                addStatement(
-                                    StringBuilder().apply {
-                                        append("return ${dependency.name}(")
-                                        val dependencies = dependency.dependencies.map {
-                                            "${it.name.lowercase()}()"
-                                        }.joinToString(", ")
-                                        append(dependencies)
-                                        append(")")
-                                    }.toString()
-                                )
-                            }.build()
-                        )
-                    }.build()
+                                    returns(
+                                        TypeVariableName.invoke(dependency.name)
+                                    )
+                                    addStatement(
+                                        StringBuilder().apply {
+                                            append("return ${dependency.name}(")
+                                            val dependencies = dependency.dependencies.joinToString(", ") {
+                                                "${it.name.lowercase()}()"
+                                            }
+                                            append(dependencies)
+                                            append(")")
+                                        }.toString()
+                                    )
+                                }.build()
+                            )
+                        }.build()
                 )
             }.build()
 
