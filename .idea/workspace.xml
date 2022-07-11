@@ -6,25 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="25b8fab6-66a6-4e7b-8606-e764ae4c3f44" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/Dependency.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/Dependency.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/Root.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/Root.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/ClassVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/ClassVisitor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk/src/main/kotlin/Inject.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk/src/main/kotlin/Inject.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dummy/Car.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dummy/Car.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dummy/Engine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dummy/Engine.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dummy/Gas.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dummy/Gas.kt" afterDir="false" />
       <change beforePath="/media/doni/bigHD/backup/Others/dirk/.idea/workspace.xml" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/build.gradle.kts" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/build.gradle.kts" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/DirkGenerator.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/DirkGenerator.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/information/Dependency.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/information/Dependency.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/information/Root.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/information/Root.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/visitor/ClassVisitor.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/visitor/ClassVisitor.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk/src/main/kotlin/Inject.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk/src/main/kotlin/Inject.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/src/main/kotlin/dummy/Car.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/src/main/kotlin/dummy/Car.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/src/main/kotlin/dummy/Engine.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/src/main/kotlin/dummy/Engine.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/src/main/kotlin/dummy/Gas.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/src/main/kotlin/dummy/Gas.kt" afterDir="false" />
+      <change beforePath="/media/doni/bigHD/backup/Others/dirk/README.md" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
