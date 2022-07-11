@@ -1,10 +1,13 @@
 package information
 
 data class Root(
-    val dependencies: HashMap<String, Dependency> = hashMapOf()
+    val factories: HashMap<String, FactoryInfo> = hashMapOf(),
+    val components: HashMap<String, ComponentInfo> = hashMapOf()
 ) {
-    operator fun contains(name: String) = name in dependencies
-    operator fun plusAssign(dependency: Dependency) {
-        dependencies["${dependency.packageName}.${dependency.name}"] = dependency
+    operator fun plusAssign(factoryInfo: FactoryInfo) {
+        factories[factoryInfo.parameterInfo.fullName] = factoryInfo
+    }
+    operator fun plusAssign(componentInfo: ComponentInfo) {
+        components[componentInfo.parameterInfo.fullName] = componentInfo
     }
 }

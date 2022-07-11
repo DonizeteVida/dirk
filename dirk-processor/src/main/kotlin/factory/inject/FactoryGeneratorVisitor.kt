@@ -1,4 +1,4 @@
-package visitor
+package factory.inject
 
 import Factory
 import com.google.devtools.ksp.processing.CodeGenerator
@@ -9,11 +9,12 @@ import com.google.devtools.ksp.symbol.KSVisitorVoid
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ksp.writeTo
-import information.Dependency
+import factory.FunctionVisitor
+import information.FactoryInfo
+import information.ParameterInfo
 import information.Root
-import information.asClassName
 
-class ClassVisitor(
+class FactoryGeneratorVisitor(
     private val codeGenerator: CodeGenerator,
     private val kspLogger: KSPLogger,
     private val root: Root
@@ -23,33 +24,26 @@ class ClassVisitor(
         val packageName = classDeclaration.packageName.asString()
         val fullName = "$packageName.$name"
 
-        kspLogger.warn("Full name: $fullName")
-
-        if (fullName in root) {
-            kspLogger.warn("$fullName is already mapped")
-            return
-        }
-
-        val dependency = Dependency(
-            packageName = packageName,
-            name = name,
-            fullName = fullName
+        val factoryInfo = FactoryInfo(
+            parameterInfo = ParameterInfo(
+                packageName = packageName,
+                name = name,
+                fullName = fullName
+            )
         )
 
-        root += dependency
+        root += factoryInfo
 
-        classDeclaration.primaryConstructor?.accept(ConstructorVisitor(kspLogger), dependency)
+        classDeclaration.primaryConstructor?.accept(FunctionVisitor(kspLogger), factoryInfo.functionInfo)
 
         val factoryName = "${name}_Factory"
 
         val fileSpec = FileSpec
             .builder(packageName, factoryName)
             .apply {
-                addFileComment(dependency.toString())
-
                 addImport(packageName, name)
-                dependency.dependencies.forEach {
-                    addImport(it.packageName, it.name)
+                factoryInfo.functionInfo.inParameterInfoList.forEach { (packageName, name) ->
+                    addImport(packageName, name)
                 }
 
                 addType(
@@ -57,20 +51,20 @@ class ClassVisitor(
                         .apply {
                             primaryConstructor(
                                 FunSpec.constructorBuilder().apply {
-                                    dependency.dependencies.forEach {
+                                    factoryInfo.functionInfo.inParameterInfoList.forEach {
                                         val lowercase = it.name.lowercase()
-                                        addParameter(
-                                            lowercase,
+                                        val parameterizedFactory =
                                             Factory::class
                                                 .asClassName()
-                                                .parameterizedBy(it.asClassName()),
+                                                .parameterizedBy(it.asClassName())
+                                        addParameter(
+                                            lowercase,
+                                            parameterizedFactory,
                                         )
                                         addProperty(
                                             PropertySpec.builder(
                                                 lowercase,
-                                                Factory::class
-                                                    .asClassName()
-                                                    .parameterizedBy(it.asClassName()),
+                                                parameterizedFactory,
                                                 KModifier.PRIVATE
                                             ).initializer(
                                                 lowercase
@@ -82,7 +76,7 @@ class ClassVisitor(
                             addSuperinterface(
                                 Factory::class
                                     .asClassName()
-                                    .parameterizedBy(dependency.asClassName())
+                                    .parameterizedBy(factoryInfo.parameterInfo.asClassName())
                             )
                             addFunction(
                                 FunSpec.builder("invoke").apply {
@@ -90,15 +84,18 @@ class ClassVisitor(
                                         KModifier.OVERRIDE,
                                         KModifier.OPERATOR
                                     )
-                                    returns(
-                                        TypeVariableName.invoke(dependency.name)
-                                    )
+//                                    returns(
+//                                        TypeVariableName.invoke(factoryInfo.name)
+//                                    )
                                     addStatement(
                                         StringBuilder().apply {
-                                            append("return ${dependency.name}(")
-                                            val dependencies = dependency.dependencies.joinToString(", ") {
-                                                "${it.name.lowercase()}()"
-                                            }
+                                            append("return ${factoryInfo.parameterInfo.name}(")
+                                            val dependencies = factoryInfo
+                                                .functionInfo
+                                                .inParameterInfoList
+                                                .joinToString(", ") {
+                                                    "${it.name.lowercase()}()"
+                                                }
                                             append(dependencies)
                                             append(")")
                                         }.toString()

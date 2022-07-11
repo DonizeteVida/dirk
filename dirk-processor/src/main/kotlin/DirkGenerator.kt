@@ -1,23 +1,24 @@
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.processing.Resolver
-import com.google.devtools.ksp.processing.SymbolProcessor
+import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
+import factory.component.ComponentGeneratorVisitor
 import information.Root
-import visitor.ClassVisitor
+import factory.inject.FactoryGeneratorVisitor
 
 class DirkGenerator(
-    private val codeGenerator: CodeGenerator,
-    private val kspLogger: KSPLogger
+    private val environment: SymbolProcessorEnvironment
 ) : SymbolProcessor {
     override fun process(resolver: Resolver): List<KSAnnotated> {
         val root = Root()
-        val symbol = resolver.getSymbolsWithAnnotation(
+        resolver.getSymbolsWithAnnotation(
             Inject::class.qualifiedName!!
-        )
-        symbol.filterIsInstance<KSClassDeclaration>().forEach {
-            it.accept(ClassVisitor(codeGenerator, kspLogger, root), Unit)
+        ).filterIsInstance<KSClassDeclaration>().forEach {
+            it.accept(FactoryGeneratorVisitor(environment.codeGenerator, environment.logger, root), Unit)
+        }
+        resolver.getSymbolsWithAnnotation(
+            Component::class.qualifiedName!!
+        ).filterIsInstance<KSClassDeclaration>().forEach {
+            it.accept(ComponentGeneratorVisitor(environment.codeGenerator, environment.logger, root), Unit)
         }
         return emptyList()
     }
