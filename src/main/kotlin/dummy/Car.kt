@@ -6,4 +6,10 @@ import Inject
 class Car (
     private val engine: Engine,
     private val gas: Gas
-)
+) {
+    operator fun invoke() {
+        println("Vrummm!!!")
+        engine()
+        gas()
+    }
+}

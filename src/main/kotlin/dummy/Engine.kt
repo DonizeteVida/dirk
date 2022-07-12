@@ -3,4 +3,8 @@ package dummy
 import Inject
 
 @Inject
-class Engine
+class Engine {
+    operator fun invoke() {
+        println("Dummmm!!!")
+    }
+}

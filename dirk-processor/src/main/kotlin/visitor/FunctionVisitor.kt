@@ -26,7 +26,7 @@ class FunctionVisitor (
             if (resolvedParameter is KSClassDeclaration) {
                 val parameterInfo = ParameterInfo()
                 resolvedParameter.accept(classVisitor, parameterInfo)
-                data.inParameterInfoList += parameterInfo
+                data += parameterInfo
             }
         }
 

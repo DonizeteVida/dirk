@@ -3,4 +3,8 @@ package dummy
 import Inject
 
 @Inject
-class Gas
+class Gas {
+    operator fun invoke() {
+        println("Glub glub!!!")
+    }
+}

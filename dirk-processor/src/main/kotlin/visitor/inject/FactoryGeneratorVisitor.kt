@@ -25,18 +25,19 @@ class FactoryGeneratorVisitor(
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
         val factoryInfo = FactoryInfo()
 
-        root += factoryInfo
-
         classDeclaration.accept(classVisitor, factoryInfo.parameterInfo)
         classDeclaration.primaryConstructor?.accept(functionVisitor, factoryInfo.functionInfo)
 
+        root += factoryInfo
+
         val factoryName = "${factoryInfo.parameterInfo.name}_Factory"
+        val factory = Factory::class.asClassName()
 
         val fileSpec = FileSpec
             .builder(factoryInfo.parameterInfo.packageName, factoryName)
             .apply {
                 addImport(packageName, name)
-                factoryInfo.functionInfo.inParameterInfoList.forEach { (packageName, name) ->
+                factoryInfo.functionInfo.inParameterInfoList.values.forEach { (packageName, name) ->
                     addImport(packageName, name)
                 }
 
@@ -45,20 +46,17 @@ class FactoryGeneratorVisitor(
                         .apply {
                             primaryConstructor(
                                 FunSpec.constructorBuilder().apply {
-                                    factoryInfo.functionInfo.inParameterInfoList.forEach {
+                                    factoryInfo.functionInfo.inParameterInfoList.values.forEach {
                                         val lowercase = it.name.lowercase()
-                                        val factory =
-                                            Factory::class
-                                                .asClassName()
-                                                .parameterizedBy(it.asClassName())
+                                        val parameter = factory.parameterizedBy(it.asClassName())
                                         addParameter(
                                             lowercase,
-                                            factory,
+                                            parameter,
                                         )
                                         addProperty(
                                             PropertySpec.builder(
                                                 lowercase,
-                                                factory,
+                                                parameter,
                                                 KModifier.PRIVATE
                                             ).initializer(
                                                 lowercase
@@ -68,9 +66,7 @@ class FactoryGeneratorVisitor(
                                 }.build()
                             )
                             addSuperinterface(
-                                Factory::class
-                                    .asClassName()
-                                    .parameterizedBy(factoryInfo.parameterInfo.asClassName())
+                                factory.parameterizedBy(factoryInfo.parameterInfo.asClassName())
                             )
                             addFunction(
                                 FunSpec.builder("invoke").apply {
@@ -84,6 +80,7 @@ class FactoryGeneratorVisitor(
                                             val dependencies = factoryInfo
                                                 .functionInfo
                                                 .inParameterInfoList
+                                                .values
                                                 .joinToString(", ") {
                                                     "${it.name.lowercase()}()"
                                                 }
