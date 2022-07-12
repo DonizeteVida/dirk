@@ -36,56 +36,55 @@ class ComponentGeneratorVisitor(
             componentInfo.functionInfoList += functionInfo
         }
 
-        val factory = Factory::class.asClassName()
+        val factoryClass = Factory::class.asClassName()
 
         val fileSpec = FileSpec.builder(componentInfo.parameterInfo.packageName, componentName).apply {
             addType(
                 TypeSpec.classBuilder(componentName).apply {
+                    //implements interface
                     addSuperinterface(
                         componentInfo.parameterInfo.asClassName()
                     )
-                    val factories = root.factories
-                    val resolvedFactories = orderFactories()
-                    resolvedFactories.forEach {
-                        val resolvedFactory = factories[it]!!
-                        addProperty(
-                            PropertySpec.builder(
-                                resolvedFactory.parameterInfo.name.lowercase(),
-                                factory.parameterizedBy(resolvedFactory.parameterInfo.asClassName())
-                            ).apply {
-                                val str = StringBuilder().apply {
-                                    append("${resolvedFactory.parameterInfo.name}_Factory(")
-                                    val parameters = resolvedFactory.functionInfo.inParameterInfoList.values.joinToString(", ") {
-                                        it.name.lowercase()
+
+                    //instantiate factories
+                    orderFactories().map {
+                        val factory = root.factories[it]!!
+                        val name = factory.parameterInfo.name
+                        PropertySpec.builder(
+                            name.lowercase(),
+                            factoryClass.parameterizedBy(factory.parameterInfo.asClassName())
+                        ).apply {
+                            val str = StringBuilder().apply {
+                                append("${name}_Factory(")
+                                val factoryParameters = factory
+                                    .functionInfo
+                                    .inParameterInfoList
+                                    .values
+                                    .joinToString(", ") { parameterInfo ->
+                                        parameterInfo.name.lowercase()
                                     }
-                                    append(parameters)
-                                    append(")")
-                                }.toString()
-                                initializer(str)
-                            }.build()
-                        )
-                    }
+                                append(factoryParameters)
+                                append(")")
+                            }.toString()
+                            initializer(str)
+                        }.build()
+                    }.also(::addProperties)
+
+                    //implement described functions on @Component
+                    //using previous instantiated factories
                     componentInfo.functionInfoList.forEach {
-                        it.outParameterInfo?.let { (packageName, name) ->
-                            addImport(packageName, name)
-                        }
+                        val (packageName, name) = it.outParameterInfo
+                        addImport(packageName, name)
                         addFunction(
                             FunSpec.builder(it.name).apply {
                                 addModifiers(
                                     KModifier.OVERRIDE
                                 )
-                                returns(
-                                    TypeVariableName.invoke(it.outParameterInfo?.name ?: "")
-                                )
                                 addStatement(
                                     StringBuilder().apply {
                                         append("return ")
-                                        if (it.outParameterInfo == null) {
-                                            append("Unit")
-                                        } else {
-                                            append(it.outParameterInfo!!.name.lowercase())
-                                            append("()")
-                                        }
+                                        append(name.lowercase())
+                                        append("()")
                                     }.toString()
                                 )
                             }.build()
@@ -138,23 +137,25 @@ class ComponentGeneratorVisitor(
             kspLogger.error("Circular dependency: $str")
             return
         }
-        if (factory.functionInfo.inParameterInfoList.isEmpty()) {
-            //it has no dependencies
-            toCreate += fullName
-            kspLogger.warn(fullName)
-            return
-        }
-        factory.functionInfo.inParameterInfoList.forEach {(key, _) ->
-            if (key in toCreate) return@forEach
-            history += fullName
-            val dependsOn = factories[key]
-            if (dependsOn == null) {
-                kspLogger.error("Factory $key not found")
-                return
+        factory.functionInfo.inParameterInfoList.apply {
+            if (isEmpty()) {
+                //it has no dependencies
+                toCreate += fullName
+            } else {
+                history += fullName
+                forEach { (key, _) ->
+                    if (key !in toCreate) {
+                        val dependsOn = factories[key]
+                        if (dependsOn == null) {
+                            kspLogger.error("Factory $key not found")
+                            return
+                        }
+                        resolveFactory(dependsOn, factories, history, toCreate)
+                    }
+                }
+                toCreate += fullName
+                history -= fullName
             }
-            resolveFactory(dependsOn, factories, history, toCreate)
-            toCreate += fullName
-            history -= fullName
         }
     }
 }

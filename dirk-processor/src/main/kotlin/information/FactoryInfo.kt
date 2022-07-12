@@ -5,6 +5,6 @@ data class FactoryInfo(
     val functionInfo: FunctionInfo = FunctionInfo()
 ) {
     override fun toString(): String {
-        return "FactoryInfo(\nparameterInfo=$parameterInfo\n, parameterInfoList=\n$functionInfo})"
+        return "FactoryInfo(parameterInfo=$parameterInfo, functionInfo=$functionInfo)\n"
     }
 }
