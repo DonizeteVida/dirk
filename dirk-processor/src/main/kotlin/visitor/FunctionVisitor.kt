@@ -35,5 +35,10 @@ class FunctionVisitor (
         if (returnDeclaration is KSClassDeclaration) {
             returnDeclaration.accept(classVisitor, data.outClassInfo)
         }
+
+        //It'll be improved
+        function.annotations.forEach {
+            data.annotations += it.shortName.getShortName()
+        }
     }
 }

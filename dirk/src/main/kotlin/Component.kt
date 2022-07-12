@@ -1,5 +1,3 @@
-annotation class Component {
-    annotation class Builder {
-
-    }
-}
+@Target(AnnotationTarget.CLASS)
+@Retention(AnnotationRetention.SOURCE)
+annotation class Component

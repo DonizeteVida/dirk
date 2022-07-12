@@ -1,15 +1,16 @@
 package visitor.component
 
 import Names.FACTORY_BY
+import com.google.devtools.ksp.getDeclaredFunctions
 import com.google.devtools.ksp.isAbstract
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSVisitorVoid
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ksp.writeTo
+import getDeclaredClasses
 import information.ComponentInfo
 import information.FactoryInfo
 import information.FunctionInfo
@@ -30,7 +31,6 @@ class ComponentGeneratorVisitor(
         //we have to get knowledge about functions who it is capable to provides
         if (!classDeclaration.isAbstract()) {
             kspLogger.error("@Module must be used on abstract classes: ${classDeclaration.simpleName.getShortName()}")
-            return
         }
 
         val componentInfo = ComponentInfo()
@@ -42,13 +42,87 @@ class ComponentGeneratorVisitor(
 
         root += componentInfo
 
+        //We're verifying if it has a class named 'Builder'
+        //As we must implement it to pass things that cannot be instantiated by
+        //@Inject or @Module
+        //such as Context in Android
+        //because it's a lifecycle instance
+        val componentBuilderInfo = componentInfo.componentBuilderInfo
+        classDeclaration.getDeclaredClasses().apply {
+            if (count() > 1) {
+                kspLogger.error(
+                    """
+                    We must have only one class inside @Module class
+                    Please revise: ${joinToString(", ") { declaration -> declaration.simpleName.getShortName() }}
+                    """
+                )
+            }
+            firstOrNull()?.apply {
+                if (simpleName.getShortName() != "Builder") {
+                    kspLogger.error(
+                        """
+                    The class inside @Component must be named "Builder"
+                    Please rename the "${simpleName.getShortName()}"
+                    """
+                    )
+                }
+                accept(classVisitor, componentBuilderInfo.classInfo)
+                getDeclaredFunctions().forEach {
+                    val functionInfo = FunctionInfo()
+                    it.accept(functionVisitor, functionInfo)
+                    componentBuilderInfo += functionInfo
+                }
+            }
+        }
+
+        //Later it we will verify if builder is correct
+        //What is correct in this case?
+        //A builder must have a build function which returns the @Module's class itself
+        //and all other functions must return the builder itself
+        componentBuilderInfo.functionInfoList.apply {
+            if (isNotEmpty()) {
+                //here is our deal: if it's empty, even if it has a
+                //Builder class, we will ignore it, otherwise, we will
+                //implement the builder class
+                //let's verify
+                val build = get("build")
+                if (build == null) {
+                    kspLogger.error("A Builder must have a build function")
+                    return
+                }
+                //let's verify the return type
+                val parentClassInfo = componentInfo.classInfo
+                val functionOutClassInfo = build.outClassInfo
+                if (parentClassInfo != functionOutClassInfo) {
+                    kspLogger.error("A Builder build function must return it's parent type")
+                }
+                //If we get here, at least we have a build function which
+                //return it's @Module class correctly
+                //let's verify the others
+                val builderClassInfo = componentBuilderInfo.classInfo
+                forEach { (key, value) ->
+                    //ignore build, because it is already validated
+                    if (key == "build") return@forEach
+                    //we expect all functions return the builder itself
+                    if (value.outClassInfo != builderClassInfo) {
+                        kspLogger.error(
+                            """
+                            All builder's functions must return the builder itself.
+                            Please revise the "${value.name}" function.
+                            """
+                        )
+                    }
+                }
+            }
+        }
+
         val componentName = "Dirk${componentInfo.classInfo.name}"
 
         //Here we will get knowledge about all functions inside this Module
         //its name, its parameters and its return type
         //function visitor will call ClassVisitor for
         //each parameter and return type
-        classDeclaration.declarations.filterIsInstance<KSFunctionDeclaration>().forEach {
+        classDeclaration.getDeclaredFunctions().forEach {
             val functionInfo = FunctionInfo()
             it.accept(functionVisitor, functionInfo)
             componentInfo.functionInfoList += functionInfo
@@ -158,7 +232,6 @@ class ComponentGeneratorVisitor(
                 append(fullName)
             }.toString()
             kspLogger.error("Circular dependency: $str")
-            return
         }
         factory.functionInfo.inClassInfoList.apply {
             if (isEmpty()) {
@@ -171,9 +244,9 @@ class ComponentGeneratorVisitor(
                         val dependsOn = factories[key]
                         if (dependsOn == null) {
                             kspLogger.error("Factory $key not found")
-                            return
+                        } else {
+                            resolveFactory(dependsOn, factories, history, toCreate)
                         }
-                        resolveFactory(dependsOn, factories, history, toCreate)
                     }
                 }
                 toCreate += fullName

@@ -3,7 +3,8 @@ package information
 data class FunctionInfo(
     var name: String = "",
     val inClassInfoList: HashMap<String, ClassInfo> = hashMapOf(),
-    val outClassInfo: ClassInfo = ClassInfo()
+    val outClassInfo: ClassInfo = ClassInfo(),
+    val annotations: HashSet<String> = hashSetOf()
 ) {
     operator fun plusAssign(classInfo: ClassInfo) {
         inClassInfoList[classInfo.fullName] = classInfo

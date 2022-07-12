@@ -34,7 +34,6 @@ class FactoryGeneratorVisitor(
         //big day
         if (!function.isConstructor()) {
             kspLogger.error("@Inject must only be annotated on a constructor: ${function.simpleName.getShortName()}")
-            return
         }
 
         //resolve() give us the original class
@@ -55,7 +54,6 @@ class FactoryGeneratorVisitor(
             isInternal()
         }) {
             kspLogger.error("@Inject must be annotated on a valid class: ${classDeclaration.simpleName.getShortName()}")
-            return
         }
 
         //here will be where all fuckness will happen
