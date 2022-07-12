@@ -1,9 +1,8 @@
 package dummy
 
-import Inject
+import javax.inject.Inject
 
-@Inject
-data class Man(
+data class Man @Inject constructor(
     val car: Car,
     val empty: Empty
 )

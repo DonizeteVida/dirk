@@ -1,9 +1,8 @@
 package dummy
 
-import Inject
+import javax.inject.Inject
 
-@Inject
-class Car (
+class Car @Inject constructor(
     private val engine: Engine,
     private val gas: Gas
 ) {

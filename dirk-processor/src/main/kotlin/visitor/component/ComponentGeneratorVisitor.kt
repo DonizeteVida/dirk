@@ -1,6 +1,7 @@
 package visitor.component
 
-import Factory
+import Names.FACTORY_BY
+import com.google.devtools.ksp.isAbstract
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
 import com.google.devtools.ksp.processing.KSPLogger
@@ -8,11 +9,13 @@ import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSVisitorVoid
 import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ksp.writeTo
-import information.*
-import visitor.FunctionVisitor
+import information.ComponentInfo
+import information.FactoryInfo
+import information.FunctionInfo
+import information.Root
 import visitor.ClassVisitor
+import visitor.FunctionVisitor
 
 class ComponentGeneratorVisitor(
     private val codeGenerator: CodeGenerator,
@@ -22,22 +25,41 @@ class ComponentGeneratorVisitor(
     private val functionVisitor: FunctionVisitor
 ) : KSVisitorVoid() {
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
+        //here will get informations about who is annotated by @Module
+        //what should we know?
+        //we have to get knowledge about functions who it is capable to provides
+        if (!classDeclaration.isAbstract()) {
+            kspLogger.error("@Module must be used on abstract classes: ${classDeclaration.simpleName.getShortName()}")
+            return
+        }
+
         val componentInfo = ComponentInfo()
 
+        //As every place in code, we will get knowledge about the
+        //class which is annotated by @Module, because we will
+        //have to implement it
         classDeclaration.accept(classVisitor, componentInfo.classInfo)
 
         root += componentInfo
 
         val componentName = "Dirk${componentInfo.classInfo.name}"
 
+        //Here we will get knowledge about all functions inside this Module
+        //its name, its parameters and its return type
+        //function visitor will call ClassVisitor for
+        //each parameter and return type
         classDeclaration.declarations.filterIsInstance<KSFunctionDeclaration>().forEach {
             val functionInfo = FunctionInfo()
             it.accept(functionVisitor, functionInfo)
             componentInfo.functionInfoList += functionInfo
         }
 
-        val factoryClass = Factory::class.asClassName()
-
+        //Here is where we will build the class itself
+        //we are supposing a lot of things at the moment
+        //there is a lot to be verified, suck as name conflicts
+        //binds logic e so on
+        //for know its okay
+        //must be improved
         val fileSpec = FileSpec.builder(componentInfo.classInfo.packageName, componentName).apply {
             addType(
                 TypeSpec.classBuilder(componentName).apply {
@@ -52,7 +74,7 @@ class ComponentGeneratorVisitor(
                         val name = factory.classInfo.name
                         PropertySpec.builder(
                             name.lowercase(),
-                            factoryClass.parameterizedBy(factory.classInfo.asClassName()),
+                            FACTORY_BY(factory.classInfo.asClassName()),
                             KModifier.PRIVATE
                         ).apply {
                             val str = StringBuilder().apply {

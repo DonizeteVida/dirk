@@ -1,9 +1,8 @@
 package dummy
 
-import Inject
+import javax.inject.Inject
 
-@Inject
-class Engine {
+class Engine @Inject constructor(){
     operator fun invoke() {
         println("Dummmm!!!")
     }

@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25b8fab6-66a6-4e7b-8606-e764ae4c3f44" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/FunctionInfo.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/FunctionInfo.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/FunctionVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/FunctionVisitor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dirk-processor/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/component/ComponentGeneratorVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/component/ComponentGeneratorVisitor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/inject/FactoryGeneratorVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/inject/FactoryGeneratorVisitor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dirk/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/dirk/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dirk/src/main/kotlin/Inject.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dummy/Car.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dummy/Car.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dummy/Empty.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dummy/Empty.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dummy/Engine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dummy/Engine.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dummy/Gas.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dummy/Gas.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dummy/Man.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dummy/Man.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,10 +42,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin File" />
         <option value="Kotlin Annotation" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Object" />
       </list>
     </option>
   </component>

@@ -16,7 +16,7 @@ repositories {
 dependencies {
     implementation(project(":dirk"))
     ksp(project(":dirk-processor"))
-
+    implementation("javax.inject:javax.inject:1")
     testImplementation(kotlin("test"))
 }
 

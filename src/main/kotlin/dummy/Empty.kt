@@ -1,7 +1,5 @@
 package dummy
 
-import Inject
+import javax.inject.Inject
 
-@Inject
-class Empty {
-}
+class Empty @Inject constructor()

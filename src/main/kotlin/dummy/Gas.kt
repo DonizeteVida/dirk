@@ -1,9 +1,8 @@
 package dummy
 
-import Inject
+import javax.inject.Inject
 
-@Inject
-class Gas {
+class Gas @Inject constructor(){
     operator fun invoke() {
         println("Glub glub!!!")
     }

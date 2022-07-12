@@ -1,11 +1,15 @@
-import com.google.devtools.ksp.processing.*
+import com.google.devtools.ksp.processing.Resolver
+import com.google.devtools.ksp.processing.SymbolProcessor
+import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
-import visitor.component.ComponentGeneratorVisitor
+import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import information.Root
 import visitor.ClassVisitor
 import visitor.FunctionVisitor
+import visitor.component.ComponentGeneratorVisitor
 import visitor.inject.FactoryGeneratorVisitor
+import javax.inject.Inject
 
 class DirkGenerator(
     private val environment: SymbolProcessorEnvironment
@@ -36,7 +40,7 @@ class DirkGenerator(
 
         resolver.getSymbolsWithAnnotation(
             Inject::class.qualifiedName!!
-        ).filterIsInstance<KSClassDeclaration>().forEach {
+        ).filterIsInstance<KSFunctionDeclaration>().forEach {
             it.accept(factoryGeneratorVisitor, Unit)
         }
         resolver.getSymbolsWithAnnotation(
