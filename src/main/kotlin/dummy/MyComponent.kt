@@ -1,6 +1,7 @@
 package dummy
 
 import Component
+import dummy2.Bread
 
 @Component
 interface MyComponent {
@@ -8,4 +9,5 @@ interface MyComponent {
     fun getGas(): Gas
     fun getEngine(): Engine
     fun getMan(): Man
+    fun getBread(): Bread
 }

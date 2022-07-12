@@ -56,7 +56,7 @@ class ComponentGeneratorVisitor(
 
         //Here is where we will build the class itself
         //we are supposing a lot of things at the moment
-        //there is a lot to be verified, suck as name conflicts
+        //there is a lot to be verified, such as name conflicts
         //binds logic e so on
         //for know its okay
         //must be improved
@@ -97,7 +97,7 @@ class ComponentGeneratorVisitor(
                     //using previous instantiated factories
                     componentInfo.functionInfoList.forEach {
                         val (packageName, name) = it.outClassInfo
-                        addImport(packageName, name)
+                        addImport(packageName, name, "${name}_Factory")
                         addFunction(
                             FunSpec.builder(it.name).apply {
                                 addModifiers(
