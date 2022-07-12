@@ -5,22 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25b8fab6-66a6-4e7b-8606-e764ae4c3f44" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkProcessorProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkProcessorProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/Dependency.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/FactoryInfo.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/Root.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/Root.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/ClassVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/factory/inject/FactoryGeneratorVisitor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/ConstructorVisitor.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk/src/main/kotlin/Inject.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk/src/main/kotlin/Inject.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/.idea/workspace.xml" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/DirkGenerator.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/DirkGenerator.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/DirkProcessorProvider.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/DirkProcessorProvider.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/information/Dependency.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/information/FactoryInfo.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/information/Root.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/information/Root.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/visitor/ClassVisitor.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/factory/inject/FactoryGeneratorVisitor.kt" afterDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk-processor/src/main/kotlin/visitor/ConstructorVisitor.kt" beforeDir="false" />
-      <change beforePath="/media/doni/bigHD/backup/Others/dirk/dirk/src/main/kotlin/Inject.kt" beforeDir="false" afterPath="/media/doni/bigHD/backup/Others/dirk/dirk/src/main/kotlin/Inject.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +43,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="/media/doni/bigHD/backup/Others/dirk" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -66,17 +56,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/doni/Desktop/backup/Others/ksp/examples/playground&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/home/vntdoju/Área de Trabalho/MyProjects/dirk",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="/media/doni/bigHD/backup/Others/dirk" />
@@ -121,6 +111,19 @@
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="playground.main" />
       <shortenClasspath name="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="dirk" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="dirk" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

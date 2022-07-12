@@ -1,4 +1,4 @@
-package factory
+package visitor
 
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSClassDeclaration
@@ -9,7 +9,8 @@ import information.FunctionInfo
 import information.ParameterInfo
 
 class FunctionVisitor (
-    private val kspLogger: KSPLogger
+    private val kspLogger: KSPLogger,
+    private val classVisitor: ClassVisitor
 ) : KSDefaultVisitor<FunctionInfo, Unit>() {
     override fun defaultHandler(node: KSNode, data: FunctionInfo) {
         kspLogger.error("Function Visitor")
@@ -24,7 +25,7 @@ class FunctionVisitor (
             val resolvedParameter = it.type.resolve().declaration
             if (resolvedParameter is KSClassDeclaration) {
                 val parameterInfo = ParameterInfo()
-                resolvedParameter.accept(ClassVisitor(kspLogger), parameterInfo)
+                resolvedParameter.accept(classVisitor, parameterInfo)
                 data.inParameterInfoList += parameterInfo
             }
         }
@@ -33,7 +34,7 @@ class FunctionVisitor (
         val returnDeclaration = function.returnType?.resolve()?.declaration
         if (returnDeclaration is KSClassDeclaration) {
             val parameterInfo = ParameterInfo()
-            returnDeclaration.accept(ClassVisitor(kspLogger), parameterInfo)
+            returnDeclaration.accept(classVisitor, parameterInfo)
             data.outParameterInfo = parameterInfo
         }
     }

@@ -8,9 +8,9 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="/media/doni/bigHD/backup/Others/dirk" />
-            <option value="/media/doni/bigHD/backup/Others/dirk/dirk" />
-            <option value="/media/doni/bigHD/backup/Others/dirk/dirk-processor" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/dirk" />
+            <option value="$PROJECT_DIR$/dirk-processor" />
           </set>
         </option>
       </GradleProjectSettings>

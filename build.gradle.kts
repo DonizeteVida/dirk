@@ -33,3 +33,7 @@ tasks {
 application {
     mainClass.set("MainKt")
 }
+
+sourceSets.main {
+    java.srcDirs("build/generated/ksp")
+}

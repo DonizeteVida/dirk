@@ -1,4 +1,4 @@
-package factory.inject
+package visitor.inject
 
 import Factory
 import com.google.devtools.ksp.processing.CodeGenerator
@@ -9,37 +9,31 @@ import com.google.devtools.ksp.symbol.KSVisitorVoid
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ksp.writeTo
-import factory.FunctionVisitor
+import visitor.FunctionVisitor
 import information.FactoryInfo
 import information.ParameterInfo
 import information.Root
+import visitor.ClassVisitor
 
 class FactoryGeneratorVisitor(
     private val codeGenerator: CodeGenerator,
     private val kspLogger: KSPLogger,
-    private val root: Root
+    private val root: Root,
+    private val classVisitor: ClassVisitor,
+    private val functionVisitor: FunctionVisitor
 ) : KSVisitorVoid() {
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
-        val name = classDeclaration.simpleName.getShortName()
-        val packageName = classDeclaration.packageName.asString()
-        val fullName = "$packageName.$name"
-
-        val factoryInfo = FactoryInfo(
-            parameterInfo = ParameterInfo(
-                packageName = packageName,
-                name = name,
-                fullName = fullName
-            )
-        )
+        val factoryInfo = FactoryInfo()
 
         root += factoryInfo
 
-        classDeclaration.primaryConstructor?.accept(FunctionVisitor(kspLogger), factoryInfo.functionInfo)
+        classDeclaration.accept(classVisitor, factoryInfo.parameterInfo)
+        classDeclaration.primaryConstructor?.accept(functionVisitor, factoryInfo.functionInfo)
 
-        val factoryName = "${name}_Factory"
+        val factoryName = "${factoryInfo.parameterInfo.name}_Factory"
 
         val fileSpec = FileSpec
-            .builder(packageName, factoryName)
+            .builder(factoryInfo.parameterInfo.packageName, factoryName)
             .apply {
                 addImport(packageName, name)
                 factoryInfo.functionInfo.inParameterInfoList.forEach { (packageName, name) ->
@@ -53,18 +47,18 @@ class FactoryGeneratorVisitor(
                                 FunSpec.constructorBuilder().apply {
                                     factoryInfo.functionInfo.inParameterInfoList.forEach {
                                         val lowercase = it.name.lowercase()
-                                        val parameterizedFactory =
+                                        val factory =
                                             Factory::class
                                                 .asClassName()
                                                 .parameterizedBy(it.asClassName())
                                         addParameter(
                                             lowercase,
-                                            parameterizedFactory,
+                                            factory,
                                         )
                                         addProperty(
                                             PropertySpec.builder(
                                                 lowercase,
-                                                parameterizedFactory,
+                                                factory,
                                                 KModifier.PRIVATE
                                             ).initializer(
                                                 lowercase
@@ -84,9 +78,6 @@ class FactoryGeneratorVisitor(
                                         KModifier.OVERRIDE,
                                         KModifier.OPERATOR
                                     )
-//                                    returns(
-//                                        TypeVariableName.invoke(factoryInfo.name)
-//                                    )
                                     addStatement(
                                         StringBuilder().apply {
                                             append("return ${factoryInfo.parameterInfo.name}(")
