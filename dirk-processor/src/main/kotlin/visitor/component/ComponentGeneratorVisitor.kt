@@ -52,7 +52,8 @@ class ComponentGeneratorVisitor(
                         val name = factory.parameterInfo.name
                         PropertySpec.builder(
                             name.lowercase(),
-                            factoryClass.parameterizedBy(factory.parameterInfo.asClassName())
+                            factoryClass.parameterizedBy(factory.parameterInfo.asClassName()),
+                            KModifier.PRIVATE
                         ).apply {
                             val str = StringBuilder().apply {
                                 append("${name}_Factory(")
