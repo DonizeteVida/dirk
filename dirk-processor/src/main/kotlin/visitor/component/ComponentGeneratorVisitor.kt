@@ -24,11 +24,11 @@ class ComponentGeneratorVisitor(
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
         val componentInfo = ComponentInfo()
 
-        classDeclaration.accept(classVisitor, componentInfo.parameterInfo)
+        classDeclaration.accept(classVisitor, componentInfo.classInfo)
 
         root += componentInfo
 
-        val componentName = "Dirk${componentInfo.parameterInfo.name}"
+        val componentName = "Dirk${componentInfo.classInfo.name}"
 
         classDeclaration.declarations.filterIsInstance<KSFunctionDeclaration>().forEach {
             val functionInfo = FunctionInfo()
@@ -38,28 +38,28 @@ class ComponentGeneratorVisitor(
 
         val factoryClass = Factory::class.asClassName()
 
-        val fileSpec = FileSpec.builder(componentInfo.parameterInfo.packageName, componentName).apply {
+        val fileSpec = FileSpec.builder(componentInfo.classInfo.packageName, componentName).apply {
             addType(
                 TypeSpec.classBuilder(componentName).apply {
                     //implements interface
                     addSuperinterface(
-                        componentInfo.parameterInfo.asClassName()
+                        componentInfo.classInfo.asClassName()
                     )
 
                     //instantiate factories
                     orderFactories().map {
                         val factory = root.factories[it]!!
-                        val name = factory.parameterInfo.name
+                        val name = factory.classInfo.name
                         PropertySpec.builder(
                             name.lowercase(),
-                            factoryClass.parameterizedBy(factory.parameterInfo.asClassName()),
+                            factoryClass.parameterizedBy(factory.classInfo.asClassName()),
                             KModifier.PRIVATE
                         ).apply {
                             val str = StringBuilder().apply {
                                 append("${name}_Factory(")
                                 val factoryParameters = factory
                                     .functionInfo
-                                    .inParameterInfoList
+                                    .inClassInfoList
                                     .values
                                     .joinToString(", ") { parameterInfo ->
                                         parameterInfo.name.lowercase()
@@ -74,7 +74,7 @@ class ComponentGeneratorVisitor(
                     //implement described functions on @Component
                     //using previous instantiated factories
                     componentInfo.functionInfoList.forEach {
-                        val (packageName, name) = it.outParameterInfo
+                        val (packageName, name) = it.outClassInfo
                         addImport(packageName, name)
                         addFunction(
                             FunSpec.builder(it.name).apply {
@@ -126,7 +126,7 @@ class ComponentGeneratorVisitor(
         history: MutableSet<String>,
         toCreate: MutableSet<String>
     ) {
-        val fullName = factory.parameterInfo.fullName
+        val fullName = factory.classInfo.fullName
         if (fullName in toCreate) return
         if (fullName in history) {
             val str = StringBuilder().apply {
@@ -138,7 +138,7 @@ class ComponentGeneratorVisitor(
             kspLogger.error("Circular dependency: $str")
             return
         }
-        factory.functionInfo.inParameterInfoList.apply {
+        factory.functionInfo.inClassInfoList.apply {
             if (isEmpty()) {
                 //it has no dependencies
                 toCreate += fullName

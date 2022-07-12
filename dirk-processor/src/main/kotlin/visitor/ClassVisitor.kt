@@ -4,16 +4,16 @@ import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSNode
 import com.google.devtools.ksp.visitor.KSDefaultVisitor
-import information.ParameterInfo
+import information.ClassInfo
 
 class ClassVisitor(
     private val kspLogger: KSPLogger
-) : KSDefaultVisitor<ParameterInfo, Unit>() {
-    override fun defaultHandler(node: KSNode, data: ParameterInfo) {
+) : KSDefaultVisitor<ClassInfo, Unit>() {
+    override fun defaultHandler(node: KSNode, data: ClassInfo) {
         kspLogger.error("Class visitor")
     }
 
-    override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: ParameterInfo) {
+    override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: ClassInfo) {
         val name = classDeclaration.simpleName.getShortName()
         val packageName = classDeclaration.packageName.asString()
         val fullName = "$packageName.$name"

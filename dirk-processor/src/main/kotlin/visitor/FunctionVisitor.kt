@@ -6,7 +6,7 @@ import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSNode
 import com.google.devtools.ksp.visitor.KSDefaultVisitor
 import information.FunctionInfo
-import information.ParameterInfo
+import information.ClassInfo
 
 class FunctionVisitor (
     private val kspLogger: KSPLogger,
@@ -24,18 +24,16 @@ class FunctionVisitor (
         function.parameters.forEach {
             val resolvedParameter = it.type.resolve().declaration
             if (resolvedParameter is KSClassDeclaration) {
-                val parameterInfo = ParameterInfo()
-                resolvedParameter.accept(classVisitor, parameterInfo)
-                data += parameterInfo
+                val classInfo = ClassInfo()
+                resolvedParameter.accept(classVisitor, classInfo)
+                data += classInfo
             }
         }
 
         //out
         val returnDeclaration = function.returnType?.resolve()?.declaration
         if (returnDeclaration is KSClassDeclaration) {
-            val parameterInfo = ParameterInfo()
-            returnDeclaration.accept(classVisitor, parameterInfo)
-            data.outParameterInfo = parameterInfo
+            returnDeclaration.accept(classVisitor, data.outClassInfo)
         }
     }
 }

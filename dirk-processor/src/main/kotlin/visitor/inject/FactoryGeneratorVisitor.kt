@@ -11,7 +11,6 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ksp.writeTo
 import visitor.FunctionVisitor
 import information.FactoryInfo
-import information.ParameterInfo
 import information.Root
 import visitor.ClassVisitor
 
@@ -25,19 +24,19 @@ class FactoryGeneratorVisitor(
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
         val factoryInfo = FactoryInfo()
 
-        classDeclaration.accept(classVisitor, factoryInfo.parameterInfo)
+        classDeclaration.accept(classVisitor, factoryInfo.classInfo)
         classDeclaration.primaryConstructor?.accept(functionVisitor, factoryInfo.functionInfo)
 
         root += factoryInfo
 
-        val factoryName = "${factoryInfo.parameterInfo.name}_Factory"
+        val factoryName = "${factoryInfo.classInfo.name}_Factory"
         val factory = Factory::class.asClassName()
 
         val fileSpec = FileSpec
-            .builder(factoryInfo.parameterInfo.packageName, factoryName)
+            .builder(factoryInfo.classInfo.packageName, factoryName)
             .apply {
                 addImport(packageName, name)
-                factoryInfo.functionInfo.inParameterInfoList.values.forEach { (packageName, name) ->
+                factoryInfo.functionInfo.inClassInfoList.values.forEach { (packageName, name) ->
                     addImport(packageName, name)
                 }
 
@@ -46,7 +45,7 @@ class FactoryGeneratorVisitor(
                         .apply {
                             primaryConstructor(
                                 FunSpec.constructorBuilder().apply {
-                                    factoryInfo.functionInfo.inParameterInfoList.values.forEach {
+                                    factoryInfo.functionInfo.inClassInfoList.values.forEach {
                                         val lowercase = it.name.lowercase()
                                         val parameter = factory.parameterizedBy(it.asClassName())
                                         addParameter(
@@ -66,7 +65,7 @@ class FactoryGeneratorVisitor(
                                 }.build()
                             )
                             addSuperinterface(
-                                factory.parameterizedBy(factoryInfo.parameterInfo.asClassName())
+                                factory.parameterizedBy(factoryInfo.classInfo.asClassName())
                             )
                             addFunction(
                                 FunSpec.builder("invoke").apply {
@@ -76,10 +75,10 @@ class FactoryGeneratorVisitor(
                                     )
                                     addStatement(
                                         StringBuilder().apply {
-                                            append("return ${factoryInfo.parameterInfo.name}(")
+                                            append("return ${factoryInfo.classInfo.name}(")
                                             val dependencies = factoryInfo
                                                 .functionInfo
-                                                .inParameterInfoList
+                                                .inClassInfoList
                                                 .values
                                                 .joinToString(", ") {
                                                     "${it.name.lowercase()}()"
