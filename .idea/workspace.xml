@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25b8fab6-66a6-4e7b-8606-e764ae4c3f44" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/ComponentInfo.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/ComponentInfo.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/component/ComponentGeneratorVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/component/ComponentGeneratorVisitor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/inject/FactoryGeneratorVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/inject/FactoryGeneratorVisitor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk/src/main/kotlin/Component.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk/src/main/kotlin/Component.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dummy/MyComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dummy/MyComponent.kt" afterDir="false" />
-    </list>
+    <list default="true" id="25b8fab6-66a6-4e7b-8606-e764ae4c3f44" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,10 +29,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Interface" />
-        <option value="Kotlin File" />
         <option value="Kotlin Object" />
         <option value="Kotlin Annotation" />
         <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>

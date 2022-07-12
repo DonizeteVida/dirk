@@ -26,17 +26,17 @@ class ComponentGeneratorVisitor(
     private val functionVisitor: FunctionVisitor
 ) : KSVisitorVoid() {
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
-        //here will get informations about who is annotated by @Module
+        //here will get informations about who is annotated by @Component
         //what should we know?
         //we have to get knowledge about functions who it is capable to provides
         if (!classDeclaration.isAbstract()) {
-            kspLogger.error("@Module must be used on abstract classes: ${classDeclaration.simpleName.getShortName()}")
+            kspLogger.error("@Component must be used on abstract classes: ${classDeclaration.simpleName.getShortName()}")
         }
 
         val componentInfo = ComponentInfo()
 
         //As every place in code, we will get knowledge about the
-        //class which is annotated by @Module, because we will
+        //class which is annotated by @Component, because we will
         //have to implement it
         classDeclaration.accept(classVisitor, componentInfo.classInfo)
 
@@ -52,7 +52,7 @@ class ComponentGeneratorVisitor(
             if (count() > 1) {
                 kspLogger.error(
                     """
-                    We must have only one class inside @Module class
+                    We must have only one class inside @Component class
                     Please revise: ${joinToString(", ") { declaration -> declaration.simpleName.getShortName() }}
                     """
                 )
@@ -77,7 +77,7 @@ class ComponentGeneratorVisitor(
 
         //Later it we will verify if builder is correct
         //What is correct in this case?
-        //A builder must have a build function which returns the @Module's class itself
+        //A builder must have a build function which returns the @Component's class itself
         //and all other functions must return the builder itself
         componentBuilderInfo.functionInfoList.apply {
             if (isNotEmpty()) {
@@ -97,7 +97,7 @@ class ComponentGeneratorVisitor(
                     kspLogger.error("A Builder build function must return it's parent type")
                 }
                 //If we get here, at least we have a build function which
-                //return it's @Module class correctly
+                //return it's @Component class correctly
                 //let's verify the others
                 val builderClassInfo = componentBuilderInfo.classInfo
                 forEach { (key, value) ->
