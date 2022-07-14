@@ -1,6 +1,6 @@
 package visitor.component
 
-import Names.FACTORY_BY
+import asFactoryParam
 import com.google.devtools.ksp.getDeclaredFunctions
 import com.google.devtools.ksp.isAbstract
 import com.google.devtools.ksp.processing.CodeGenerator
@@ -134,12 +134,12 @@ class ComponentGeneratorVisitor(
         //binds logic e so on
         //for know its okay
         //must be improved
-        val fileSpec = FileSpec.builder(componentInfo.classInfo.packageName, componentName).apply {
+        val fileSpec = FileSpec.builder(componentInfo.classInfo.pack, componentName).apply {
             addType(
                 TypeSpec.classBuilder(componentName).apply {
                     //implements interface
                     addSuperinterface(
-                        componentInfo.classInfo.asClassName()
+                        componentInfo.classInfo.className
                     )
 
                     //instantiate factories
@@ -148,7 +148,7 @@ class ComponentGeneratorVisitor(
                         val name = factory.classInfo.name
                         PropertySpec.builder(
                             name.lowercase(),
-                            FACTORY_BY(factory.classInfo.asClassName()),
+                            factory.classInfo.className.asFactoryParam(),
                             KModifier.PRIVATE
                         ).apply {
                             val str = StringBuilder().apply {
@@ -222,7 +222,7 @@ class ComponentGeneratorVisitor(
         history: MutableSet<String>,
         toCreate: MutableSet<String>
     ) {
-        val fullName = factory.classInfo.fullName
+        val fullName = factory.classInfo.qualified
         if (fullName in toCreate) return
         if (fullName in history) {
             val str = StringBuilder().apply {

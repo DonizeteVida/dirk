@@ -2,9 +2,7 @@ package information
 
 data class FactoryInfo(
     val classInfo: ClassInfo = ClassInfo(),
-    val functionInfo: FunctionInfo = FunctionInfo()
-) {
-    override fun toString(): String {
-        return "FactoryInfo(parameterInfo=$classInfo, functionInfo=$functionInfo)\n"
-    }
-}
+    val functionInfo: FunctionInfo = FunctionInfo(),
+    val additionalImports: ArrayList<ClassInfo> = arrayListOf(),
+    val statementBuilder: FactoryInfo.() -> String,
+)

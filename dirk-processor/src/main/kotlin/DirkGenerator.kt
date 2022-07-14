@@ -8,7 +8,8 @@ import information.Root
 import visitor.ClassVisitor
 import visitor.FunctionVisitor
 import visitor.component.ComponentGeneratorVisitor
-import visitor.inject.FactoryGeneratorVisitor
+import visitor.inject.InjectGeneratorVisitor
+import visitor.module.ModuleGeneratorVisitor
 import javax.inject.Inject
 
 class DirkGenerator(
@@ -23,12 +24,26 @@ class DirkGenerator(
         val classVisitor = ClassVisitor(logger)
         val functionVisitor = FunctionVisitor(logger, classVisitor)
 
-        val factoryGeneratorVisitor = FactoryGeneratorVisitor(
+        val factoryGenerator = FactoryGenerator(
+            codeGenerator,
+            logger,
+            root,
+            classVisitor
+        )
+        val injectGeneratorVisitor = InjectGeneratorVisitor(
+            codeGenerator,
+            logger,
+            root,
+            functionVisitor,
+            factoryGenerator
+        )
+        val moduleGeneratorVisitor = ModuleGeneratorVisitor(
             codeGenerator,
             logger,
             root,
             classVisitor,
-            functionVisitor
+            functionVisitor,
+            factoryGenerator
         )
         val componentGeneratorVisitor = ComponentGeneratorVisitor(
             codeGenerator,
@@ -37,11 +52,15 @@ class DirkGenerator(
             classVisitor,
             functionVisitor
         )
-
         resolver.getSymbolsWithAnnotation(
             Inject::class.qualifiedName!!
         ).filterIsInstance<KSFunctionDeclaration>().forEach {
-            it.accept(factoryGeneratorVisitor, Unit)
+            it.accept(injectGeneratorVisitor, Unit)
+        }
+        resolver.getSymbolsWithAnnotation(
+            Module::class.qualifiedName!!
+        ).filterIsInstance<KSClassDeclaration>().forEach {
+            it.accept(moduleGeneratorVisitor, Unit)
         }
         resolver.getSymbolsWithAnnotation(
             Component::class.qualifiedName!!

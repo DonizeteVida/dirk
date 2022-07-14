@@ -5,6 +5,7 @@ import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSNode
 import com.google.devtools.ksp.visitor.KSDefaultVisitor
+import com.squareup.kotlinpoet.ksp.toAnnotationSpec
 import information.FunctionInfo
 import information.ClassInfo
 
@@ -38,7 +39,7 @@ class FunctionVisitor (
 
         //It'll be improved
         function.annotations.forEach {
-            data.annotations += it.shortName.getShortName()
+            data.annotations += it.toAnnotationSpec()
         }
     }
 }

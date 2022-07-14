@@ -3,6 +3,7 @@ package dummy
 import BindsInstance
 import Component
 import dummy2.Bread
+import dummy2.ByModule
 import dummy2.Thing
 
 @Component
@@ -18,4 +19,5 @@ interface MyComponent {
     fun getEngine(): Engine
     fun getMan(): Man
     fun getBread(): Bread
+    fun getByModule(): ByModule
 }

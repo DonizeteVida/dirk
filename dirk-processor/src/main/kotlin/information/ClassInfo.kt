@@ -3,9 +3,13 @@ package information
 import com.squareup.kotlinpoet.ClassName
 
 data class ClassInfo(
-    var packageName: String = "",
-    var name: String = "",
-    var fullName: String = "",
+    //package is a reserved word
+    var pack: String = "",
+    var name: String = ""
 ) {
-    fun asClassName() = ClassName(packageName, name)
+    val qualified: String
+        get() = "$pack.$name"
+
+    val className: ClassName
+        get() = ClassName(pack, name)
 }

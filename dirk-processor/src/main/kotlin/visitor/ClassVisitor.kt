@@ -15,11 +15,9 @@ class ClassVisitor(
 
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: ClassInfo) {
         val name = classDeclaration.simpleName.getShortName()
-        val packageName = classDeclaration.packageName.asString()
-        val fullName = "$packageName.$name"
+        val pack = classDeclaration.packageName.getShortName()
 
         data.name = name
-        data.packageName = packageName
-        data.fullName = fullName
+        data.pack = pack
     }
 }
