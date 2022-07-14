@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25b8fab6-66a6-4e7b-8606-e764ae4c3f44" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/DirkGenerator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/Names.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/ClassInfo.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/ClassInfo.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/FunctionInfo.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/FunctionInfo.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/Root.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/information/Root.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/utils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/utils.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/ClassVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/ClassVisitor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/FunctionVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/FunctionVisitor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/component/ComponentGeneratorVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/component/ComponentGeneratorVisitor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/inject/FactoryGeneratorVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/dirk-processor/src/main/kotlin/visitor/inject/InjectGeneratorVisitor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/dummy/MyComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/dummy/MyComponent.kt" afterDir="false" />
-    </list>
+    <list default="true" id="25b8fab6-66a6-4e7b-8606-e764ae4c3f44" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +84,7 @@
       <recent name="information" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.dirk [clean assemble]">
+  <component name="RunManager" selected="Gradle.dirk [clean]">
     <configuration name="dirk [clean]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
       <ExternalSystemSettings>
         <option name="executionName" />

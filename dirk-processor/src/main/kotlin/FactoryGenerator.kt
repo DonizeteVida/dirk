@@ -29,8 +29,6 @@ class FactoryGenerator(
     }
 
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: FactoryInfo) {
-        classDeclaration.accept(classVisitor, data.classInfo)
-
         root += data
 
         val factoryName = "${data.classInfo.name}_Factory"

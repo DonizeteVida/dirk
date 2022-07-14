@@ -11,6 +11,7 @@ import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSVisitorVoid
 import information.FactoryInfo
+import information.FunctionInfo
 import information.Root
 import visitor.FunctionVisitor
 
@@ -51,12 +52,18 @@ class InjectGeneratorVisitor(
         }) {
             kspLogger.error("@Inject must be annotated on a valid class: ${classDeclaration.simpleName.getShortName()}")
         }
-        val factoryInfo = FactoryInfo {
+        val functionInfo = FunctionInfo()
+
+        classDeclaration.primaryConstructor?.accept(functionVisitor, functionInfo)
+
+        classDeclaration.accept(factoryGenerator, functionInfo.asFactoryInfo())
+    }
+
+    private fun FunctionInfo.asFactoryInfo() =
+        FactoryInfo(
+            classInfo = outClassInfo,
+            functionInfo = this
+        ) {
             classInfo.name
         }
-
-        classDeclaration.primaryConstructor?.accept(functionVisitor, factoryInfo.functionInfo)
-
-        classDeclaration.accept(factoryGenerator, factoryInfo)
-    }
 }

@@ -2,12 +2,8 @@ package information
 
 data class Root(
     val factories: HashMap<String, FactoryInfo> = hashMapOf(),
-    val modules: HashMap<String, ModuleInfo> = hashMapOf(),
     val components: HashMap<String, ComponentInfo> = hashMapOf()
 ) {
-    operator fun plusAssign(moduleInfo: ModuleInfo) {
-        modules[moduleInfo.classInfo.qualified] = moduleInfo
-    }
     operator fun plusAssign(factoryInfo: FactoryInfo) {
         factories[factoryInfo.classInfo.qualified] = factoryInfo
     }
